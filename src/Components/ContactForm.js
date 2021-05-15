@@ -31,6 +31,7 @@ class Form extends Component {
     refs.name.value = '';
     refs.tel.value = '';
   };
+
   render() {
     return (
       <StyledForm action="submit" onSubmit={this.onHandleSubmit}>
