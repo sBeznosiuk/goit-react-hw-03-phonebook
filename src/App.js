@@ -9,6 +9,22 @@ class App extends Component {
     filter: '',
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      console.log('updated');
+      localStorage.setItem('Contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
+  componentDidMount() {
+    const contacts = localStorage.getItem('Contacts');
+    const parsedContacts = JSON.parse(contacts);
+
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
+
   addContact = contact => {
     const doesExists = this.state.contacts.some(
       item => item.name === contact.name,
@@ -32,22 +48,6 @@ class App extends Component {
       contacts: [...prev.contacts.filter(i => i.id !== e.target.id)],
     }));
   };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.contacts !== prevState.contacts) {
-      console.log('updated');
-      localStorage.setItem('Contacts', JSON.stringify(this.state.contacts));
-    }
-  }
-
-  componentDidMount() {
-    const contacts = localStorage.getItem('Contacts');
-    const parsedContacts = JSON.parse(contacts);
-
-    if (parsedContacts) {
-      this.setState({ contacts: parsedContacts });
-    }
-  }
 
   render() {
     return (
